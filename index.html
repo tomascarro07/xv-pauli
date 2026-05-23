@@ -103,7 +103,7 @@
 <span class="sec-tag">confirmación</span>
 <h2 class="sec-title">Me gustaría contar<br/>con tu presencia</h2>
 <div class="gold-line"></div>
-<p class="sec-body">Confirmá tu asistencia antes del <strong style="color:var(--gold)">20 de Mayo</strong></p>
+<p class="sec-body">Confirmá tu asistencia antes del <strong style="color:var(--sky)">20 de Mayo</strong></p>
 <div id="rsvp-wrap">
 <div class="rsvp-form">
 <div><label class="field-label">Nombre completo</label><input class="rsvp-input" id="rsvp-name" placeholder="Ingresá tu nombre completo" type="text"/></div>
@@ -177,14 +177,20 @@
 <span class="sec-tag">vestimenta</span>
 <h2 class="sec-title">Orientación para tu vestuario</h2>
 <div class="gold-line"></div>
-<p class="sec-body">La paleta de colores de la noche. Vengan con todo ese estilo 💫</p>
-<div class="dress-grid">
-<div class="dress-card"><div class="dress-swatch" style="background:#f5e6d0;"></div><span class="dress-name">Nude</span><span class="dress-hint">champagne &amp; crema</span></div>
-<div class="dress-card"><div class="dress-swatch" style="background:#e8a0b0;"></div><span class="dress-name">Rosa</span><span class="dress-hint">palo &amp; blush</span></div>
-<div class="dress-card"><div class="dress-swatch" style="background:#d4aa5a;"></div><span class="dress-name">Dorado</span><span class="dress-hint">champagne &amp; oro</span></div>
-<div class="dress-card"><div class="dress-swatch" style="background:#c8a0c8;"></div><span class="dress-name">Lila</span><span class="dress-hint">pastel &amp; lavanda</span></div>
+<p class="sec-body">Vengan con todo su estilo. Solo hay dos colores reservados 💫</p>
+<div class="dress-grid" style="justify-content:center;gap:28px;">
+<div class="dress-card">
+  <div class="dress-swatch" style="background:#ffffff;border:2px solid #ddd;"></div>
+  <span class="dress-name" style="color:var(--rose);">Blanco</span>
+  <span class="dress-hint">reservado para la festejada</span>
 </div>
-<p class="dress-avoid">Por favor evitá el <strong>blanco</strong> y el <strong>negro</strong></p>
+<div class="dress-card">
+  <div class="dress-swatch" style="background:#111111;"></div>
+  <span class="dress-name" style="color:var(--rose);">Negro</span>
+  <span class="dress-hint">preferimos evitarlo</span>
+</div>
+</div>
+<p class="dress-avoid" style="margin-top:22px;font-size:17px;">Por favor evitá el <strong>blanco</strong> y el <strong>negro</strong> ✨</p>
 </section>
 <!-- ═══ MURO MENSAJES ═══ -->
 <section class="section">
@@ -199,7 +205,7 @@
 <p class="sheet-loading" id="msg-loading">Enviando...</p>
 </div>
 <div class="messages-grid" id="messages-grid"></div>
-<p id="no-msgs" style="font-style:italic;color:var(--cream3);margin-top:14px;font-size:16px;">Sé el primero en dejar un mensaje 💛</p>
+<p id="no-msgs" style="font-style:italic;color:var(--text3);margin-top:14px;font-size:16px;">Sé el primero en dejar un mensaje 💛</p>
 </section>
 <!-- ═══ REGALOS ═══ -->
 <section class="section s-dark">
@@ -215,7 +221,7 @@
 <div class="cuenta-row"><span class="cuenta-key">Cuenta</span><span class="cuenta-val">···· ···· ···· ····</span></div>
 <div class="cuenta-row"><span class="cuenta-key">Alias</span><span class="cuenta-val">PAULI.XV</span></div>
 </div>
-<p style="margin-top:12px;font-style:italic;font-size:13px;color:var(--cream3);">* Reemplazá estos datos con los reales en el código</p>
+<p style="margin-top:12px;font-style:italic;font-size:13px;color:var(--text3);">* Reemplazá estos datos con los reales en el código</p>
 </div>
 </section>
 <!-- ═══ COMPARTIR ═══ -->
@@ -234,7 +240,7 @@
 <div class="ornament">✦ ✦ ✦</div>
 <p class="footer-name">Paulina</p>
 <div class="gold-line"></div>
-<p class="footer-sub">mis quince años · 5 de junio</p>
+<p class="footer-sub">Mis Quince Años · 5 de Junio</p>
 <div class="ornament" style="margin-top:18px;">🌸</div>
 <p class="footer-dev">Desarrollado con amor por <a href="#" target="_blank">Ibitaweb</a></p>
 </footer>
@@ -359,7 +365,7 @@ async function submitRSVP(){
   const name=document.getElementById('rsvp-name').value.trim();
   const dato=document.getElementById('rsvp-dato').value.trim();
   if(!name){alert('Por favor ingresá tu nombre.');return;}
-  await sendToSheet(RSVP_URL,{nombre:name,dato:dato,timestamp:new Date().toLocaleString('es-UY')},'rsvp-btn','rsvp-loading');
+  await sendToSheet(RSVP_URL,{nombre:name,extra:dato,timestamp:new Date().toLocaleString('es-UY')},'rsvp-btn','rsvp-loading');
   document.getElementById('rsvp-wrap').style.display='none';
   const suc=document.getElementById('rsvp-success'); suc.style.display='block';
   document.getElementById('rsvp-thanks-msg').textContent='¡Gracias, '+name+'! Tu asistencia está confirmada. ¡Te esperamos con todo! 🌸'+(dato?' (Anotamos: '+dato+')':'');
@@ -371,13 +377,29 @@ async function submitSong(){
   const artist=document.getElementById('song-artist').value.trim();
   const yt=document.getElementById('song-yt').value.trim();
   if(!name||!artist){alert('Por favor ingresá la canción y el artista.');return;}
-  await sendToSheet(SONG_URL,{cancion:name,artista:artist,youtube:yt,timestamp:new Date().toLocaleString('es-UY')},'song-btn','song-loading');
+  await sendToSheet(SONG_URL,{nombre:name+' - '+artist,extra:yt,timestamp:new Date().toLocaleString('es-UY')},'song-btn','song-loading');
   document.getElementById('cancion-wrap').style.display='none';
   document.getElementById('song-success').style.display='block';
 }
 
 /* MURO */
 const localMessages=[];
+
+// Cargar mensajes existentes desde Sheets al cargar la página
+(async function loadMessages(){
+  try{
+    const res = await fetch(WALL_URL);
+    const data = await res.json();
+    if(Array.isArray(data)){
+      data.forEach(row=>{
+        if(row.nombre && row.mensaje){
+          localMessages.push({author:row.nombre, text:row.mensaje, time:new Date(row.timestamp||Date.now())});
+        }
+      });
+      renderMessages();
+    }
+  }catch(e){ /* silencioso si falla */ }
+})();
 async function submitMessage(){
   const author=document.getElementById('msg-author').value.trim();
   const text=document.getElementById('msg-text').value.trim();
