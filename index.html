@@ -8,14 +8,12 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
-
 :root{
-  --rose:#d4607a;--rose-light:#e8a0b4;--rose-pale:#fce8ef;
-  --sky:#5aacdc;--sky-light:#a8d8f0;
-  --cream:#fff8f4;--text:#2a3a50;--text2:#4a5a70;
-  --envelope:#f7ede6;--envelope-dark:#f0ddd2;--seal:#d4849a;
+  --rose:#d4607a;--rose-light:#e8a0b4;
+  --sky:#5aacdc;
+  --text:#2a3a50;--text2:#4a5a70;
+  --seal:#d4849a;
 }
-
 body{
   background:linear-gradient(160deg,#fbe8f0 0%,#e8f4fc 60%,#fdf4f7 100%);
   font-family:'Cormorant Garamond',serif;
@@ -24,7 +22,7 @@ body{
   position:relative;overflow:hidden;
 }
 
-/* ── PÉTALOS ── */
+/* PÉTALOS */
 #petals{position:fixed;inset:0;pointer-events:none;z-index:1;}
 .petal{position:absolute;top:-20px;border-radius:60% 40% 55% 35%;animation:petalFall linear infinite;opacity:0;}
 @keyframes petalFall{
@@ -33,139 +31,137 @@ body{
   100%{transform:translateY(108vh) rotate(380deg) translateX(-12px);opacity:0;}
 }
 
-/* ── HEADER TEXT ── */
+/* HEADER */
 .header-area{
-  text-align:center;margin-bottom:36px;
+  text-align:center;margin-bottom:28px;
   opacity:0;animation:fadeUp .9s .2s forwards;
   position:relative;z-index:10;
 }
-.header-date{
-  font-family:'Raleway',sans-serif;font-size:13px;letter-spacing:6px;
-  color:var(--rose);text-transform:uppercase;margin-bottom:8px;
-}
-.header-name{
-  font-family:'Dancing Script',cursive;font-size:clamp(52px,14vw,82px);
-  color:var(--text);line-height:1;
-  text-shadow:0 2px 24px rgba(212,96,122,.15);
-}
-.header-subtitle{
-  font-family:'Playfair Display',serif;font-size:clamp(18px,4vw,24px);
-  color:var(--text2);letter-spacing:3px;margin-top:4px;font-weight:400;
-}
+.header-date{font-family:'Raleway',sans-serif;font-size:12px;letter-spacing:6px;color:var(--rose);text-transform:uppercase;margin-bottom:6px;}
+.header-name{font-family:'Dancing Script',cursive;font-size:clamp(48px,12vw,76px);color:var(--text);line-height:1;}
+.header-subtitle{font-family:'Playfair Display',serif;font-size:clamp(16px,3.5vw,22px);color:var(--text2);letter-spacing:3px;margin-top:2px;}
 
-/* ── SOBRE ── */
+/* ESCENA — contenedor general del sobre + carta */
 .envelope-scene{
-  position:relative;z-index:10;
-  width:clamp(280px,80vw,380px);
+  position:relative;
+  width:clamp(300px,85vw,460px);
   opacity:0;animation:fadeUp .9s .55s forwards;
   cursor:pointer;
+  z-index:10;
 }
 
-.envelope-scene.opening .flap{animation:flapOpen .6s cubic-bezier(.4,0,.2,1) forwards;}
-.envelope-scene.opening .letter{animation:letterRise .7s .4s cubic-bezier(.4,0,.2,1) forwards;}
-.envelope-scene.opening .seal-wrap{animation:sealFade .3s forwards;}
-.envelope-scene.done{animation:envelopeExit .5s .1s forwards;}
-
-/* SVG sobre */
-.envelope-svg{width:100%;filter:drop-shadow(0 18px 40px rgba(212,96,122,.18));}
-
-/* FLAP animable */
-.flap{transform-origin:center top;transform-box:fill-box;}
-@keyframes flapOpen{
-  0%{transform:rotateX(0deg);}
-  100%{transform:rotateX(-180deg);}
-}
-
-/* CARTA que sube */
+/* CARTA — z-index alto, sale POR ENCIMA del sobre */
 .letter{
   position:absolute;
-  left:12%;width:76%;
-  bottom:38%;
+  left:10%;width:80%;
+  /* empieza dentro del sobre: parte inferior, oculta */
+  bottom:10%;
+  z-index:30;              /* ← por encima del SVG */
   background:linear-gradient(170deg,#fff 0%,#fdf4f7 100%);
-  border-radius:6px 6px 4px 4px;
-  padding:18px 14px 14px;
+  border-radius:8px 8px 4px 4px;
+  padding:20px 16px 16px;
   text-align:center;
-  box-shadow:0 -4px 24px rgba(212,96,122,.1);
-  transform:translateY(0px) scale(.95);
+  box-shadow:0 -6px 28px rgba(212,96,122,.15),0 2px 8px rgba(0,0,0,.08);
+  border:1px solid rgba(212,96,122,.18);
   opacity:0;
   pointer-events:none;
-  border:1px solid rgba(212,96,122,.15);
+  transform:translateY(0) scale(.96);
 }
-@keyframes letterRise{
-  0%{transform:translateY(0) scale(.95);opacity:0;}
-  100%{transform:translateY(-88%) scale(1);opacity:1;}
+.letter-inner-name{font-family:'Dancing Script',cursive;font-size:24px;color:var(--rose);display:block;margin-bottom:3px;}
+.letter-inner-text{font-family:'Raleway',sans-serif;font-size:10px;color:var(--text2);letter-spacing:3px;text-transform:uppercase;}
+
+/* SVG sobre — z-index MEDIO, encima del fondo pero debajo de la carta cuando sube */
+.envelope-svg-wrap{
+  position:relative;
+  z-index:20;
+  width:100%;
 }
-.letter-inner-name{
-  font-family:'Dancing Script',cursive;font-size:22px;color:var(--rose);
-  display:block;margin-bottom:2px;
-}
-.letter-inner-text{
-  font-family:'Cormorant Garamond',serif;font-size:12px;
-  color:var(--text2);letter-spacing:2px;text-transform:uppercase;
+.envelope-svg{width:100%;display:block;filter:drop-shadow(0 16px 36px rgba(212,96,122,.2));}
+
+/* FLAP — se dobla hacia atrás al abrir */
+.flap{
+  transform-origin:50% 0%;
+  transform-box:fill-box;
+  transition:none;
 }
 
-/* SELLO */
+/* SELLO — encima del SVG */
 .seal-wrap{
   position:absolute;
-  left:50%;bottom:29%;
+  left:50%;
+  /* lo posicionamos sobre el doblez del sobre: ~42% desde abajo del wrap */
+  bottom:38%;
   transform:translateX(-50%);
-  z-index:20;
-  transition:transform .2s;
+  z-index:25;
 }
-.envelope-scene:hover:not(.opening) .seal-wrap{transform:translateX(-50%) scale(1.07);}
-@keyframes sealFade{to{opacity:0;transform:translateX(-50%) scale(1.3);}}
-
 .seal-circle{
-  width:72px;height:72px;border-radius:50%;
+  width:76px;height:76px;border-radius:50%;
   background:radial-gradient(circle at 38% 35%,#e8a4b8,var(--seal) 55%,#b86880);
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 16px rgba(180,80,100,.3),inset 0 1px 3px rgba(255,255,255,.4);
+  box-shadow:0 4px 18px rgba(180,80,100,.3),inset 0 1px 3px rgba(255,255,255,.4);
   position:relative;
 }
-.seal-text{
-  position:absolute;inset:0;
-  font-family:'Raleway',sans-serif;font-size:7.5px;letter-spacing:1.8px;
-  color:rgba(42,30,36,.7);text-transform:uppercase;
-  display:flex;align-items:center;justify-content:center;
+.seal-icon{font-size:24px;position:relative;z-index:2;filter:drop-shadow(0 1px 2px rgba(0,0,0,.15));}
+
+/* ANIMACIONES */
+@keyframes flapOpen{
+  0%  {transform:rotateX(0deg);opacity:1;}
+  100%{transform:rotateX(-175deg);opacity:.85;}
 }
-.seal-text svg{position:absolute;inset:0;width:100%;height:100%;}
-.seal-icon{font-size:22px;position:relative;z-index:2;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2));}
+@keyframes letterRise{
+  0%  {transform:translateY(0) scale(.96);opacity:0;}
+  30% {opacity:1;}
+  100%{transform:translateY(-95%) scale(1);opacity:1;}
+}
+@keyframes sealPop{
+  0%  {transform:translateX(-50%) scale(1);opacity:1;}
+  40% {transform:translateX(-50%) scale(1.15);opacity:.8;}
+  100%{transform:translateX(-50%) scale(0);opacity:0;}
+}
+@keyframes envelopeExit{
+  to{transform:scale(.88) translateY(18px);opacity:0;}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* Estados al abrir */
+.opening .flap        {animation:flapOpen  .55s .05s cubic-bezier(.4,0,.2,1) forwards;}
+.opening .seal-wrap   {animation:sealPop   .35s .0s  ease-in               forwards;}
+.opening .letter      {animation:letterRise .7s .4s  cubic-bezier(.2,.8,.3,1) forwards;}
+.done                 {animation:envelopeExit .5s .1s ease-in               forwards;}
+
+/* HOVER sello */
+.envelope-scene:not(.opening) .seal-wrap{transition:transform .2s;}
+.envelope-scene:hover:not(.opening) .seal-wrap{transform:translateX(-50%) scale(1.08);}
 
 /* HINT */
 .tap-hint{
-  margin-top:22px;text-align:center;
+  margin-top:18px;text-align:center;
   font-family:'Raleway',sans-serif;font-size:11px;letter-spacing:4px;
-  color:rgba(42,58,80,.4);text-transform:uppercase;
-  opacity:0;animation:fadeUp .9s 1s forwards;
-  position:relative;z-index:10;
-  transition:opacity .3s;
+  color:rgba(42,58,80,.38);text-transform:uppercase;
+  opacity:0;animation:fadeUp .9s 1.1s forwards;
+  position:relative;z-index:10;transition:opacity .3s;
 }
-.envelope-scene.opening ~ .tap-hint{opacity:0 !important;}
 
-/* FOOTER TEXT */
+/* FOOTER */
 .footer-text{
-  margin-top:28px;text-align:center;
-  font-family:'Playfair Display',serif;font-size:clamp(17px,4vw,22px);
+  margin-top:22px;text-align:center;
+  font-family:'Playfair Display',serif;font-size:clamp(16px,3.5vw,21px);
   font-style:italic;color:var(--text2);
-  opacity:0;animation:fadeUp .9s .8s forwards;
+  opacity:0;animation:fadeUp .9s .85s forwards;
   position:relative;z-index:10;
 }
 
-/* ── OVERLAY de transición ── */
+/* OVERLAY */
 #overlay{
   position:fixed;inset:0;
   background:linear-gradient(160deg,#fbe8f0,#e8f4fc);
   opacity:0;pointer-events:none;z-index:100;
-  transition:opacity .6s ease;
+  transition:opacity .65s ease;
 }
 #overlay.fade-in{opacity:1;pointer-events:all;}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-@keyframes envelopeExit{to{transform:scale(.9) translateY(20px);opacity:0;}}
 </style>
 </head>
 <body>
-
 <div id="petals"></div>
 <div id="overlay"></div>
 
@@ -175,76 +171,77 @@ body{
   <p class="header-subtitle">Mis XV</p>
 </div>
 
-<!-- SOBRE -->
 <div class="envelope-scene" id="envelope" onclick="openEnvelope()">
 
-  <!-- Carta que asoma -->
-  <div class="letter">
+  <!-- 1. CARTA — en el DOM antes del SVG para que el z-index funcione bien -->
+  <div class="letter" id="letter">
     <span class="letter-inner-name">Paulina</span>
     <span class="letter-inner-text">Mis XV Años · 5 de Junio</span>
   </div>
 
-  <!-- Sello -->
+  <!-- 2. SELLO — encima del SVG -->
   <div class="seal-wrap" id="seal-wrap">
     <div class="seal-circle">
-      <!-- texto circular SVG -->
-      <svg viewBox="0 0 72 72" style="position:absolute;inset:0;width:100%;height:100%;">
+      <svg viewBox="0 0 76 76" style="position:absolute;inset:0;width:100%;height:100%;">
         <defs>
-          <path id="circle-path" d="M36,36 m-26,0 a26,26 0 1,1 52,0 a26,26 0 1,1 -52,0"/>
+          <path id="cp" d="M38,38 m-27,0 a27,27 0 1,1 54,0 a27,27 0 1,1 -54,0"/>
         </defs>
-        <text font-family="Raleway,sans-serif" font-size="6.2" fill="rgba(42,30,36,0.65)" letter-spacing="1.6">
-          <textPath href="#circle-path" startOffset="5%">Haz clic aquí para ver la invitación</textPath>
+        <text font-family="Raleway,sans-serif" font-size="6" fill="rgba(42,30,36,0.6)" letter-spacing="1.4">
+          <textPath href="#cp" startOffset="3%">Haz clic aquí · para ver la invitación ·</textPath>
         </text>
       </svg>
       <span class="seal-icon">🌿</span>
     </div>
   </div>
 
-  <!-- SVG del sobre -->
-  <svg class="envelope-svg" viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="envGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#f9eeea"/>
-        <stop offset="100%" stop-color="#f0ddd2"/>
-      </linearGradient>
-      <linearGradient id="flapGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#f5e4dc"/>
-        <stop offset="100%" stop-color="#edd4c8"/>
-      </linearGradient>
-      <filter id="shadow">
-        <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="rgba(212,96,122,0.15)"/>
-      </filter>
-    </defs>
+  <!-- 3. SVG SOBRE — va encima de la carta inicialmente -->
+  <div class="envelope-svg-wrap">
+    <svg class="envelope-svg" viewBox="0 0 460 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="envG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f9eeea"/>
+          <stop offset="100%" stop-color="#f0ddd2"/>
+        </linearGradient>
+        <linearGradient id="flapG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f2e0d8"/>
+          <stop offset="100%" stop-color="#e8d0c4"/>
+        </linearGradient>
+        <filter id="sh" x="-10%" y="-10%" width="120%" height="130%">
+          <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="rgba(212,96,122,0.14)"/>
+        </filter>
+      </defs>
 
-    <!-- Cuerpo del sobre -->
-    <rect x="10" y="60" width="360" height="190" rx="12" fill="url(#envGrad)" filter="url(#shadow)"/>
+      <!-- Cuerpo -->
+      <rect x="12" y="72" width="436" height="218" rx="14" fill="url(#envG)" filter="url(#sh)"/>
 
-    <!-- Triángulos laterales (interior) -->
-    <polygon points="10,60 190,170 10,250" fill="#ecddd6" opacity=".6"/>
-    <polygon points="370,60 190,170 370,250" fill="#ecddd6" opacity=".6"/>
-    <!-- Triángulo inferior -->
-    <polygon points="10,250 190,155 370,250" fill="#e8d4cc" opacity=".7"/>
+      <!-- Triángulos interiores de doblez -->
+      <polygon points="12,72  230,198  12,290"  fill="#ecddd6" opacity=".55"/>
+      <polygon points="448,72 230,198 448,290"  fill="#ecddd6" opacity=".55"/>
+      <polygon points="12,290 230,188 448,290"  fill="#e4d0c6" opacity=".65"/>
 
-    <!-- Líneas de doblez sutiles -->
-    <line x1="10" y1="60" x2="190" y2="170" stroke="rgba(200,150,130,.25)" stroke-width="1"/>
-    <line x1="370" y1="60" x2="190" y2="170" stroke="rgba(200,150,130,.25)" stroke-width="1"/>
+      <!-- Líneas de doblez -->
+      <line x1="12"  y1="72"  x2="230" y2="198" stroke="rgba(200,145,125,.22)" stroke-width="1"/>
+      <line x1="448" y1="72"  x2="230" y2="198" stroke="rgba(200,145,125,.22)" stroke-width="1"/>
 
-    <!-- Flap superior (animable) -->
-    <polygon class="flap" points="10,62 190,165 370,62" fill="url(#flapGrad)" stroke="rgba(200,150,130,.2)" stroke-width="1"/>
+      <!-- FLAP — grupo animable con transform-box -->
+      <g class="flap" style="transform-origin:230px 72px;">
+        <polygon points="12,74 230,192 448,74" fill="url(#flapG)"/>
+        <line x1="12" y1="74" x2="448" y2="74" stroke="rgba(200,145,125,.18)" stroke-width="1"/>
+      </g>
 
-    <!-- Borde exterior -->
-    <rect x="10" y="60" width="360" height="190" rx="12" fill="none" stroke="rgba(212,150,130,.2)" stroke-width="1.5"/>
+      <!-- Borde exterior -->
+      <rect x="12" y="72" width="436" height="218" rx="14" fill="none" stroke="rgba(212,150,130,.18)" stroke-width="1.5"/>
 
-    <!-- Texto manuscrito "MIS XV" -->
-    <text x="190" y="185" text-anchor="middle"
-      font-family="Dancing Script, cursive" font-size="28"
-      fill="rgba(42,58,80,.45)" transform="rotate(-3,190,185)">Mis XV</text>
-  </svg>
+      <!-- "Mis XV" manuscrita, centrada en la mitad inferior del sobre -->
+      <text x="230" y="242" text-anchor="middle"
+        font-family="'Dancing Script',cursive" font-size="32"
+        fill="rgba(42,58,80,.38)" transform="rotate(-2,230,242)">Mis XV</text>
+    </svg>
+  </div>
 
 </div>
 
-<p class="tap-hint" id="tap-hint">toca el sobre para abrir ✦</p>
-
+<p class="tap-hint" id="tap-hint">tocá el sobre para abrirlo ✦</p>
 <p class="footer-text">¡Guardamos un lugar para vos!</p>
 
 <script>
@@ -268,23 +265,20 @@ body{
 })();
 
 /* ABRIR SOBRE */
-let opened = false;
+let opened=false;
 function openEnvelope(){
   if(opened) return;
-  opened = true;
-
-  const env = document.getElementById('envelope');
-  const hint = document.getElementById('tap-hint');
-  hint.style.opacity = '0';
+  opened=true;
+  document.getElementById('tap-hint').style.opacity='0';
+  const env=document.getElementById('envelope');
   env.classList.add('opening');
 
-  // Después de la animación → fade y navegar
+  // Cuando la carta termina de subir → hacer el sobre desaparecer y navegar
   setTimeout(()=>{
     env.classList.add('done');
-    const overlay = document.getElementById('overlay');
-    overlay.classList.add('fade-in');
-    setTimeout(()=>{ window.location.href = 'invitacion.html'; }, 650);
-  }, 1100);
+    document.getElementById('overlay').classList.add('fade-in');
+    setTimeout(()=>{ window.location.href='invitacion.html'; },680);
+  },1150);
 }
 </script>
 </body>
