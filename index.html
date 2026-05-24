@@ -107,13 +107,13 @@
 <div id="rsvp-wrap">
 <div id="rsvp-forms-container">
 <div class="rsvp-form rsvp-person-form" id="rsvp-form-0">
-<p class="rsvp-person-label">👤 Persona 1</p>
+<p class="rsvp-person-label">Persona 1</p>
 <div><label class="field-label">Nombre completo</label><input class="rsvp-input rsvp-name-input" placeholder="Ingresá tu nombre completo" type="text"/></div>
 <div><label class="field-label">Dato importante (opcional)</label><input class="rsvp-input rsvp-dato-input" placeholder="Ej: soy vegetariano/a, tengo alergia..." type="text"/></div>
 </div>
 </div>
 <div style="max-width:420px;margin:12px auto 0;display:flex;gap:10px;flex-direction:column;">
-<button class="btn-add-person" id="btn-add-person" onclick="addRSVPPerson()">+ Confirmar para otra persona</button>
+<button class="btn-add-person" id="btn-add-person" onclick="addRSVPPerson()">✦ Agregar otra persona</button>
 <button class="btn-gold" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia ✨</button>
 <p class="sheet-loading" id="rsvp-loading">Enviando...</p>
 </div>
@@ -378,7 +378,7 @@ function addRSVPPerson(){
   div.className = 'rsvp-form rsvp-person-form';
   div.id = 'rsvp-form-'+idx;
   div.innerHTML = `
-    <p class="rsvp-person-label">👤 Persona ${idx+1} <button onclick="removeRSVPPerson(${idx})" class="btn-remove-person">✕ quitar</button></p>
+    <p class="rsvp-person-label">Persona ${idx+1} <button onclick="removeRSVPPerson(${idx})" class="btn-remove-person">✕ quitar</button></p>
     <div><label class="field-label">Nombre completo</label><input class="rsvp-input rsvp-name-input" placeholder="Nombre completo" type="text"/></div>
     <div><label class="field-label">Dato importante (opcional)</label><input class="rsvp-input rsvp-dato-input" placeholder="Ej: soy vegetariano/a, tiene alergia..." type="text"/></div>
   `;
