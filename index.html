@@ -71,7 +71,7 @@
 <span class="sec-tag">contanos</span>
 <h2 class="sec-title">¿Cómo llegás a la fiesta?</h2>
 <div class="gold-line"></div>
-<div class="mood-grid">
+<div class="mood-grid mood-grid-vertical">
 <button class="mood-btn" onclick="selectMood(this,'¡Así me gusta! ¡Con toda la energía! 💃')">
 <span class="mood-icon">💃</span><span class="mood-label">Con ganas de bailar</span><span class="mood-hint">no para nada</span>
 </button>
@@ -105,9 +105,15 @@
 <div class="gold-line"></div>
 <p class="sec-body">Confirmá tu asistencia antes del <strong style="color:var(--sky)">20 de Mayo</strong></p>
 <div id="rsvp-wrap">
-<div class="rsvp-form">
-<div><label class="field-label">Nombre completo</label><input class="rsvp-input" id="rsvp-name" placeholder="Ingresá tu nombre completo" type="text"/></div>
-<div><label class="field-label">Dato importante (opcional)</label><input class="rsvp-input" id="rsvp-dato" placeholder="Ej: soy vegetariano/a, tengo alergia..." type="text"/></div>
+<div id="rsvp-forms-container">
+<div class="rsvp-form rsvp-person-form" id="rsvp-form-0">
+<p class="rsvp-person-label">👤 Persona 1</p>
+<div><label class="field-label">Nombre completo</label><input class="rsvp-input rsvp-name-input" placeholder="Ingresá tu nombre completo" type="text"/></div>
+<div><label class="field-label">Dato importante (opcional)</label><input class="rsvp-input rsvp-dato-input" placeholder="Ej: soy vegetariano/a, tengo alergia..." type="text"/></div>
+</div>
+</div>
+<div style="max-width:420px;margin:12px auto 0;display:flex;gap:10px;flex-direction:column;">
+<button class="btn-add-person" id="btn-add-person" onclick="addRSVPPerson()">+ Confirmar para otra persona</button>
 <button class="btn-gold" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia ✨</button>
 <p class="sheet-loading" id="rsvp-loading">Enviando...</p>
 </div>
@@ -206,6 +212,9 @@
 </div>
 <div class="messages-grid" id="messages-grid"></div>
 <p id="no-msgs" style="font-style:italic;color:var(--text3);margin-top:14px;font-size:16px;">Sé el primero en dejar un mensaje 💛</p>
+<div id="load-more-wrap" style="display:none;margin-top:18px;">
+<button class="btn-load-more" id="load-more-btn" onclick="showMoreMessages()">Ver más mensajes 💌</button>
+</div>
 </section>
 <!-- ═══ REGALOS ═══ -->
 <section class="section s-dark">
@@ -361,14 +370,47 @@ async function sendToSheet(url, data, btnId, loadingId){
 }
 
 /* RSVP */
+let rsvpPersonCount = 1;
+function addRSVPPerson(){
+  const container = document.getElementById('rsvp-forms-container');
+  const idx = rsvpPersonCount;
+  const div = document.createElement('div');
+  div.className = 'rsvp-form rsvp-person-form';
+  div.id = 'rsvp-form-'+idx;
+  div.innerHTML = `
+    <p class="rsvp-person-label">👤 Persona ${idx+1} <button onclick="removeRSVPPerson(${idx})" class="btn-remove-person">✕ quitar</button></p>
+    <div><label class="field-label">Nombre completo</label><input class="rsvp-input rsvp-name-input" placeholder="Nombre completo" type="text"/></div>
+    <div><label class="field-label">Dato importante (opcional)</label><input class="rsvp-input rsvp-dato-input" placeholder="Ej: soy vegetariano/a, tiene alergia..." type="text"/></div>
+  `;
+  container.appendChild(div);
+  rsvpPersonCount++;
+}
+function removeRSVPPerson(idx){
+  const el = document.getElementById('rsvp-form-'+idx);
+  if(el) el.remove();
+}
 async function submitRSVP(){
-  const name=document.getElementById('rsvp-name').value.trim();
-  const dato=document.getElementById('rsvp-dato').value.trim();
-  if(!name){alert('Por favor ingresá tu nombre.');return;}
-  await sendToSheet(RSVP_URL,{nombre:name,extra:dato,timestamp:new Date().toLocaleString('es-UY')},'rsvp-btn','rsvp-loading');
+  const forms = document.querySelectorAll('.rsvp-person-form');
+  const personas = [];
+  let allValid = true;
+  forms.forEach((form,i)=>{
+    const name = form.querySelector('.rsvp-name-input').value.trim();
+    const dato = form.querySelector('.rsvp-dato-input').value.trim();
+    if(!name){ allValid=false; form.querySelector('.rsvp-name-input').focus(); }
+    else personas.push({name,dato});
+  });
+  if(!allValid){ alert('Por favor ingresá el nombre de todas las personas.'); return; }
+  const btn=document.getElementById('rsvp-btn');
+  const loading=document.getElementById('rsvp-loading');
+  btn.disabled=true; loading.classList.add('show');
+  for(const p of personas){
+    await fetch(RSVP_URL,{method:'POST',body:JSON.stringify({nombre:p.name,extra:p.dato,timestamp:new Date().toLocaleString('es-UY')})}).catch(()=>{});
+  }
+  loading.classList.remove('show');
   document.getElementById('rsvp-wrap').style.display='none';
   const suc=document.getElementById('rsvp-success'); suc.style.display='block';
-  document.getElementById('rsvp-thanks-msg').textContent='¡Gracias, '+name+'! Tu asistencia está confirmada. ¡Te esperamos con todo! 🌸'+(dato?' (Anotamos: '+dato+')':'');
+  const nombres = personas.map(p=>p.name).join(', ');
+  document.getElementById('rsvp-thanks-msg').textContent='¡Gracias! Asistencia confirmada para: '+nombres+'. ¡Los esperamos con todo! 🌸';
 }
 
 /* CANCIÓN */
@@ -411,17 +453,28 @@ async function submitMessage(){
   document.getElementById('msg-btn').disabled=false;
   renderMessages();
 }
-function renderMessages(){
+const MSG_PAGE = 5;
+let msgVisible = MSG_PAGE;
+function renderMessages(reset){
+  if(reset) msgVisible = MSG_PAGE;
   const grid=document.getElementById('messages-grid');
   const noMsg=document.getElementById('no-msgs');
-  if(localMessages.length>0) noMsg.style.display='none';
+  const loadWrap=document.getElementById('load-more-wrap');
+  const sorted=[...localMessages].reverse();
+  if(sorted.length>0) noMsg.style.display='none';
   grid.innerHTML='';
-  [...localMessages].reverse().forEach(m=>{
+  sorted.slice(0,msgVisible).forEach(m=>{
     const d=document.createElement('div'); d.className='msg-card';
-    const min=m.time.getMinutes().toString().padStart(2,'0');
-    d.innerHTML=`<p class="msg-author">${m.author}</p><p class="msg-text">"${m.text}"</p><p class="msg-time">${m.time.getHours()}:${min}</p>`;
+    const t=m.time instanceof Date ? m.time : new Date(m.time);
+    const min=t.getMinutes().toString().padStart(2,'0');
+    d.innerHTML=`<p class="msg-author">${m.author}</p><p class="msg-text">"${m.text}"</p><p class="msg-time">${t.getHours()}:${min}</p>`;
     grid.appendChild(d);
   });
+  if(loadWrap) loadWrap.style.display = (sorted.length > msgVisible) ? 'block' : 'none';
+}
+function showMoreMessages(){
+  msgVisible += MSG_PAGE;
+  renderMessages(true);
 }
 
 /* REGALOS */
