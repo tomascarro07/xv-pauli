@@ -270,7 +270,7 @@
 <div class="gold-line"></div>
 <p class="footer-sub">Mis Quince Años · 5 de Junio</p>
 <div class="ornament" style="margin-top:18px;">🌸</div>
-<p class="footer-dev">Desarrollado con amor por <a href="https://instagram.com/invitaweb" target="_blank">InvitaWeb</a></p>
+<p class="footer-dev">Desarrollado con amor por <a href="https://www.instagram.com/invitaweb.uy/" target="_blank">InvitaWeb</a></p>
 </footer>
 <script>
 const RSVP_URL   = 'https://script.google.com/macros/s/AKfycby2bw_PEi1w4SXfk_TTuOe9Qt4-QoPeKziPu39IPRhcY4eWBf8t-KB4WMZ339tUosrSmA/exec';
@@ -435,6 +435,7 @@ async function submitRSVP(){
   const nombres = personas.map(p=>p.name).join(', ');
   document.getElementById('rsvp-thanks-msg').textContent='¡Gracias! Asistencia confirmada para: '+nombres+'. ¡Los esperamos con todo! 🌸';
   setTimeout(launchConfetti, 100);
+  setTimeout(launchConfetti, 500);
 }
 
 /* CANCIÓN */
@@ -492,7 +493,7 @@ function renderMessages(reset){
     const d=document.createElement('div'); d.className='msg-card';
     const t=m.time instanceof Date ? m.time : new Date(m.time);
     const min=t.getMinutes().toString().padStart(2,'0');
-    d.innerHTML=`<p class="msg-author">${m.author}</p><p class="msg-text">"${m.text}"</p><p class="msg-time">${t.getHours()}:${min}</p>`;
+    d.innerHTML=`<p class="msg-author">${m.author}</p><p class="msg-text">"${m.text}"</p>`;
     grid.appendChild(d);
   });
   if(loadWrap) loadWrap.style.display = (sorted.length > msgVisible) ? 'block' : 'none';
