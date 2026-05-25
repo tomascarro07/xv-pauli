@@ -1,358 +1,613 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Paulina · Mis XV</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Raleway:wght@300;400;500&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;overflow:hidden;}
-:root{
-  --rose:#d4607a;--rose-light:#e8a0b4;
-  --sky:#5aacdc;
-  --text:#2a3a50;--text2:#4a5a70;
-  --seal:#d4849a;
-}
-body{
-  background:linear-gradient(160deg,#fbe8f0 0%,#e8f4fc 60%,#fdf4f7 100%);
-  font-family:'Cormorant Garamond',serif;
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;min-height:100vh;min-height:100dvh;
-  position:relative;overflow:hidden;
-  padding:16px;
-}
+<title>Mis XV – Paulina</title>
+<meta content="Mis XV – Paulina 🌸" property="og:title"/>
+<meta content="¡Estás invitado/a a mis XV años! Jueves 5 de Junio · 21:00 hs · Granja Colonia" property="og:description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Raleway:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
 
-/* PÉTALOS */
-#petals{position:fixed;inset:0;pointer-events:none;z-index:1;}
-.petal{position:absolute;top:-20px;border-radius:60% 40% 55% 35%;animation:petalFall linear infinite;opacity:0;}
-@keyframes petalFall{
-  0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:.65;}
-  50%{transform:translateY(50vh) rotate(200deg) translateX(18px);opacity:.45;}
-  100%{transform:translateY(108vh) rotate(380deg) translateX(-12px);opacity:0;}
-}
-
-/* HEADER */
-.header-area{
-  text-align:center;margin-bottom:20px;
-  opacity:0;animation:fadeUp .9s .2s forwards;
-  position:relative;z-index:10;
-}
-.header-date{
-  font-family:'Raleway',sans-serif;
-  font-size:clamp(10px,2.8vw,13px);
-  letter-spacing:6px;color:var(--rose);
-  text-transform:uppercase;margin-bottom:4px;
-}
-.header-name{
-  font-family:'Dancing Script',cursive;
-  font-size:clamp(56px,16vw,90px);
-  color:var(--text);line-height:1.05;
-}
-.header-subtitle{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(17px,4.5vw,24px);
-  color:var(--text2);letter-spacing:3px;margin-top:2px;
-}
-
-/* ── ESCENA COMPLETA ── */
-/* Usamos un wrapper que ocupa hasta el 92vw y máximo 500px */
-.scene{
-  position:relative;
-  width:min(92vw, 500px);
-  opacity:0;animation:fadeUp .9s .55s forwards;
-  cursor:pointer;
-  z-index:10;
-  /* la altura la define el sobre SVG */
-}
-
-/* ── HOJA (carta completa) ── */
-/* Está antes del SVG en el DOM. z-index la pone arriba cuando sube. */
-.letter{
-  position:absolute;
-  left:14%;
-  width:72%;
-  /* empieza escondida dentro del sobre */
-  top:30%;
-  z-index:5;
-  opacity:0;
-  pointer-events:none;
-
-  background:linear-gradient(175deg,#fff 0%,#fdf4f8 100%);
-  border-radius:4px 4px 3px 3px;
-  border:1px solid rgba(212,96,122,.18);
-  box-shadow:0 -4px 28px rgba(212,96,122,.14), 0 2px 12px rgba(0,0,0,.07);
-
-  /* altura fija: que quepa dentro del sobre */
-  height:62%;
-
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:8px;padding:16px 12px;
-  text-align:center;
-  overflow:hidden;
-}
-
-/* líneas decorativas en la hoja */
-.letter::before{
-  content:'';position:absolute;top:14px;left:14px;right:14px;
-  height:1px;background:linear-gradient(90deg,transparent,rgba(212,96,122,.25),transparent);
-}
-.letter::after{
-  content:'';position:absolute;bottom:14px;left:14px;right:14px;
-  height:1px;background:linear-gradient(90deg,transparent,rgba(212,96,122,.25),transparent);
-}
-.letter-ornament{font-size:clamp(22px,5vw,28px);}
-.letter-name{
-  font-family:'Dancing Script',cursive;
-  font-size:clamp(26px,7vw,38px);
-  color:var(--rose);line-height:1;
-}
-.letter-msg{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(13px,3.2vw,16px);
-  color:var(--text2);letter-spacing:2px;
-  font-style:italic;line-height:1.5;
-}
-.letter-date{
-  font-family:'Raleway',sans-serif;
-  font-size:clamp(10px,2.5vw,12px);
-  letter-spacing:4px;color:var(--rose);
-  text-transform:uppercase;margin-top:4px;
-}
-.letter-xv{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(32px,9vw,52px);
-  font-weight:600;
-  background:linear-gradient(135deg,var(--sky),var(--rose));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  line-height:1;
-}
-
-/* ── SVG SOBRE ── */
-.envelope-wrap{
-  position:relative;
-  z-index:20;   /* encima de la carta hasta que sube */
-  width:100%;
-}
-.envelope-svg{width:100%;display:block;filter:drop-shadow(0 14px 32px rgba(212,96,122,.18));}
-
-/* FLAP */
-.flap{transform-box:fill-box;transform-origin:50% 0%;}
-
-/* ── SELLO ── */
-.seal-wrap{
-  position:absolute;
-  left:50%;bottom:36%;
-  transform:translateX(-50%);
-  z-index:25;
-}
-.seal-circle{
-  width:clamp(68px,16vw,84px);
-  height:clamp(68px,16vw,84px);
-  border-radius:50%;
-  background:radial-gradient(circle at 38% 35%,#e8a4b8,var(--seal) 55%,#b86880);
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 18px rgba(180,80,100,.3),inset 0 1px 3px rgba(255,255,255,.4);
-  position:relative;
-}
-.seal-icon{font-size:clamp(20px,5vw,26px);position:relative;z-index:2;}
-
-/* ── ANIMACIONES ── */
-@keyframes flapOpen{
-  0%  {transform:rotateX(0deg);}
-  100%{transform:rotateX(-175deg);}
-}
-@keyframes sealPop{
-  0%  {transform:translateX(-50%) scale(1);opacity:1;}
-  35% {transform:translateX(-50%) scale(1.18);opacity:.7;}
-  100%{transform:translateX(-50%) scale(0);opacity:0;}
-}
-/* La carta sube desde dentro y pasa POR ENCIMA del sobre */
-@keyframes letterRise{
-  0%  {transform:translateY(0) scale(.97);opacity:0;}
-  20% {opacity:1;}
-  100%{transform:translateY(-38%) scale(1);opacity:1;}
-}
-@keyframes envelopeExit{
-  to{transform:scale(.88) translateY(16px);opacity:0;}
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
-
-/* Clases de estado */
-.opening .flap     {animation:flapOpen   .55s .05s cubic-bezier(.4,0,.2,1) forwards;}
-.opening .seal-wrap{animation:sealPop    .32s .0s  ease-in                forwards;}
-.opening .letter   {animation:letterRise .75s .38s cubic-bezier(.2,.8,.3,1) forwards;}
-.done              {animation:envelopeExit .48s .08s ease-in               forwards;}
-
-/* hover sello */
-.scene:not(.opening) .seal-wrap{transition:transform .2s;}
-.scene:hover:not(.opening) .seal-wrap{transform:translateX(-50%) scale(1.08);}
-
-/* HINT */
-.tap-hint{
-  margin-top:14px;text-align:center;
-  font-family:'Raleway',sans-serif;
-  font-size:clamp(9px,2.5vw,11px);
-  letter-spacing:4px;color:rgba(42,58,80,.36);
-  text-transform:uppercase;
-  opacity:0;animation:fadeUp .9s 1.1s forwards;
-  position:relative;z-index:10;transition:opacity .3s;
-}
-
-/* FOOTER */
-.footer-text{
-  margin-top:16px;text-align:center;
-  font-family:'Playfair Display',serif;
-  font-size:clamp(15px,4vw,21px);
-  font-style:italic;color:var(--text2);
-  opacity:0;animation:fadeUp .9s .85s forwards;
-  position:relative;z-index:10;
-}
-
-/* OVERLAY */
-#overlay{
-  position:fixed;inset:0;
-  background:linear-gradient(160deg,#fbe8f0,#e8f4fc);
-  opacity:0;pointer-events:none;z-index:100;
-  transition:opacity .65s ease;
-}
-#overlay.fade-in{opacity:1;pointer-events:all;}
-</style>
-</head>
+<link href="styles.css" rel="stylesheet"/></head>
 <body>
 <div id="petals"></div>
-<div id="overlay"></div>
-
-<div class="header-area">
-  <p class="header-date">05 · 06 · 2025</p>
-  <h1 class="header-name">Paulina</h1>
-  <p class="header-subtitle">Mis XV</p>
+<audio id="bg-audio" loop="">
+<source src="https://www.dropbox.com/scl/fi/ehjotuprtsx8vl22t01s5/Ed-Sheeran-Perfect.mp3?rlkey=2dh03h3hcytiv7m80mpddvq2r&amp;raw=1" type="audio/mpeg"/>
+</audio>
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+<div id="hero-bg-photo"></div>
+<div class="hero-badge">✦ una noche especial ✦</div>
+<h1 class="hero-name">Paulina</h1>
+<p class="hero-pre">Mis</p>
+<div class="hero-xv">XV</div>
+<p class="hero-anos">años</p>
+<div class="music-btn-wrap">
+<div class="music-card">
+<p style="text-align:center;">🎵 La música de fondo<br/>es parte de la experiencia</p>
+<button class="btn-music" id="musicBtn" onclick="toggleMusic()">
+<span id="musicIcon">▶</span>
+<span id="musicLabel">Ingresar con música</span>
+</button>
+<div class="audio-playing" id="audioAnim">
+<div class="bar-anim" style="animation-delay:0s;height:5px;"></div>
+<div class="bar-anim" style="animation-delay:.12s;height:9px;"></div>
+<div class="bar-anim" style="animation-delay:.24s;height:13px;"></div>
+<div class="bar-anim" style="animation-delay:.12s;height:9px;"></div>
+<div class="bar-anim" style="animation-delay:0s;height:5px;"></div>
+<span style="margin-left:8px;">Perfect · Ed Sheeran</span>
 </div>
-
-<div class="scene" id="scene" onclick="openEnvelope()">
-
-  <!-- 1. HOJA COMPLETA — en el DOM primero, z-index la sube al animarse -->
-  <div class="letter" id="letter">
-    <span class="letter-ornament">🌸</span>
-    <span class="letter-xv">XV</span>
-    <span class="letter-name">Paulina</span>
-    <span class="letter-msg">Te invito a compartir<br/>la noche más especial<br/>de mi vida</span>
-    <span class="letter-date">Jueves 5 de Junio · 21:00 hs</span>
-  </div>
-
-  <!-- 2. SELLO -->
-  <div class="seal-wrap" id="seal-wrap">
-    <div class="seal-circle">
-      <svg viewBox="0 0 84 84" style="position:absolute;inset:0;width:100%;height:100%;">
-        <defs>
-          <path id="cp" d="M42,42 m-30,0 a30,30 0 1,1 60,0 a30,30 0 1,1 -60,0"/>
-        </defs>
-        <text font-family="Raleway,sans-serif" font-size="6.2" fill="rgba(42,30,36,0.58)" letter-spacing="1.3">
-          <textPath href="#cp" startOffset="2%">Tocá aquí · para ver la invitación ·</textPath>
-        </text>
-      </svg>
-      <span class="seal-icon">🌿</span>
-    </div>
-  </div>
-
-  <!-- 3. SVG SOBRE — encima mientras la carta no sube -->
-  <div class="envelope-wrap" id="envelope-wrap">
-    <svg class="envelope-svg" viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="envG" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#f9eeea"/>
-          <stop offset="100%" stop-color="#efdbcf"/>
-        </linearGradient>
-        <linearGradient id="flapG" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#f2dfd6"/>
-          <stop offset="100%" stop-color="#e6cdc0"/>
-        </linearGradient>
-        <filter id="sh">
-          <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="rgba(212,96,122,0.14)"/>
-        </filter>
-      </defs>
-
-      <!-- Cuerpo -->
-      <rect x="14" y="80" width="472" height="228" rx="16" fill="url(#envG)" filter="url(#sh)"/>
-
-      <!-- Triángulos de doblez laterales e inferior -->
-      <polygon points="14,80  250,208  14,308"  fill="#ecddd4" opacity=".5"/>
-      <polygon points="486,80 250,208 486,308"  fill="#ecddd4" opacity=".5"/>
-      <polygon points="14,308 250,196 486,308"  fill="#e4cfc4" opacity=".6"/>
-
-      <!-- Líneas de doblez -->
-      <line x1="14"  y1="80"  x2="250" y2="208" stroke="rgba(200,145,125,.2)" stroke-width="1"/>
-      <line x1="486" y1="80"  x2="250" y2="208" stroke="rgba(200,145,125,.2)" stroke-width="1"/>
-
-      <!-- FLAP animable -->
-      <g class="flap" style="transform-origin:250px 80px;">
-        <polygon points="14,82 250,200 486,82" fill="url(#flapG)"/>
-        <line x1="14" y1="82" x2="486" y2="82" stroke="rgba(200,145,125,.16)" stroke-width="1"/>
-      </g>
-
-      <!-- Borde -->
-      <rect x="14" y="80" width="472" height="228" rx="16" fill="none" stroke="rgba(212,150,130,.18)" stroke-width="1.5"/>
-
-      <!-- "Mis XV" manuscrita -->
-      <text x="250" y="258" text-anchor="middle"
-        font-family="'Dancing Script',cursive" font-size="34"
-        fill="rgba(42,58,80,.32)" transform="rotate(-2,250,258)">Mis XV</text>
-    </svg>
-  </div>
-
 </div>
-
-<p class="tap-hint" id="tap-hint">tocá el sobre para abrirlo ✦</p>
-<p class="footer-text">¡Guardamos un lugar para vos!</p>
-
+</div>
+</section>
+<!-- ═══ INVITACIÓN ═══ -->
+<section class="section s-dark" id="invitacion">
+<span class="sec-tag">una invitación especial</span>
+<h2 class="sec-title">Paulina<br/><em style="font-size:.8em;color:var(--sky);">Mis XV Años</em></h2>
+<div class="gold-line"></div>
+<div class="invite-card">
+<p class="invite-who">Con todo el amor del mundo</p>
+<p class="invite-text">Tengo el enorme placer de invitarte a acompañarme a celebrar este día tan especial e importante en mi vida.<br/><br/>Quiero compartir este momento único contigo.</p>
+<div class="invite-date">Jueves 5 de Junio · 21:00 hs</div>
+</div>
+</section>
+<!-- ═══ COUNTDOWN ═══ -->
+<section class="section" id="countdown-section">
+<span class="sec-tag">el gran momento</span>
+<h2 class="sec-title" id="countdownTitle">Faltan...</h2>
+<div class="gold-line"></div>
+<div class="countdown-grid" id="countdownGrid">
+<div class="count-box"><span class="count-num" id="cd-days">--</span><span class="count-label">Días</span></div>
+<div class="count-box"><span class="count-num" id="cd-hours">--</span><span class="count-label">Horas</span></div>
+<div class="count-box"><span class="count-num" id="cd-mins">--</span><span class="count-label">Min</span></div>
+<div class="count-box"><span class="count-num" id="cd-secs">--</span><span class="count-label">Seg</span></div>
+</div>
+<div id="event-arrived">🎉 ¡Esta noche es la noche! 🎉</div>
+</section>
+<!-- ═══ MOOD ═══ -->
+<section class="section s-rose">
+<span class="sec-tag">contanos</span>
+<h2 class="sec-title">¿Cómo llegás a la fiesta?</h2>
+<div class="gold-line"></div>
+<div class="mood-grid mood-grid-vertical">
+<button class="mood-btn mood-btn-centered" onclick="selectMood(this,'¡Así me gusta! ¡Con toda la energía! 💃')">
+<span class="mood-icon">💃</span><span class="mood-label">Con ganas de bailar</span>
+</button>
+<button class="mood-btn mood-btn-centered" onclick="selectMood(this,'Perfecto, también hay lugar para descansar 😌')">
+<span class="mood-icon">😌</span><span class="mood-label">Tranquilo/a</span>
+</button>
+<button class="mood-btn mood-btn-centered" onclick="selectMood(this,'¡¡MODO BESTIA ACTIVADO!! 🔥🎉')">
+<span class="mood-icon">🔥</span><span class="mood-label">Modo fiesta total</span>
+</button>
+</div>
+<p id="mood-response"></p>
+</section>
+<!-- ═══ LUGAR ═══ -->
+<section class="section s-dark">
+<span class="sec-tag">fecha y lugar</span>
+<h2 class="sec-title">La fiesta</h2>
+<div class="gold-line"></div>
+<div class="lugar-info">
+<div class="lugar-detail"><span class="ld-icon">📅</span><span class="ld-label">Fecha</span><span class="ld-val">Jueves 5 de Junio</span></div>
+<div class="lugar-detail"><span class="ld-icon">🕘</span><span class="ld-label">Hora</span><span class="ld-val">21:00 hs</span></div>
+<div class="lugar-detail"><span class="ld-icon">📍</span><span class="ld-label">Lugar</span><span class="ld-val">Granja Colonia</span></div>
+</div>
+<div class="map-wrap">
+<iframe allowfullscreen="" height="280" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3290.685437477045!2d-57.740736999999996!3d-34.4347445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a30c7c1a34ffbd%3A0x6a4ad1bd16b728e4!2sGranja%20Colonia!5e0!3m2!1ses-419!2suy!4v1768006159809!5m2!1ses-419!2suy" style="border:0;display:block;" width="100%"></iframe>
+</div>
+</section>
+<!-- ═══ RSVP ═══ -->
+<section class="section">
+<span class="sec-tag">confirmación</span>
+<h2 class="sec-title">Me gustaría contar<br/>con tu presencia</h2>
+<div class="gold-line"></div>
+<p class="sec-body">Confirmá tu asistencia antes del <strong style="color:var(--sky)">20 de Mayo</strong></p>
+<div id="rsvp-wrap">
+<div id="rsvp-forms-container">
+<div class="rsvp-form rsvp-person-form" id="rsvp-form-0">
+<p class="rsvp-person-label">Persona 1</p>
+<div><label class="field-label">Nombre completo</label><input class="rsvp-input rsvp-name-input" placeholder="Ingresá tu nombre completo" type="text"/></div>
+<div><label class="field-label">Dato importante (opcional)</label><input class="rsvp-input rsvp-dato-input" placeholder="Ej: soy vegetariano/a, tengo alergia..." type="text"/></div>
+</div>
+</div>
+<div style="max-width:420px;margin:12px auto 0;display:flex;gap:10px;flex-direction:column;">
+<button class="btn-add-person" id="btn-add-person" onclick="addRSVPPerson()">✦ Agregar otra persona</button>
+<div style="position:relative;">
+  <div class="party-burst" id="party-burst"></div>
+  <button class="btn-gold" id="rsvp-btn" onclick="submitRSVP()">Confirmar asistencia ✨</button>
+</div>
+<p class="sheet-loading" id="rsvp-loading">Enviando...</p>
+</div>
+</div>
+<div class="success-box" id="rsvp-success" style="position:relative;overflow:visible;">
+  <span class="success-icon">🌸</span>
+  <p class="success-msg" id="rsvp-thanks-msg"></p>
+  <button class="btn-add-more" onclick="showAddMore()">¿Olvidaste a alguien? Agregar más →</button>
+</div>
+<div id="rsvp-add-more" style="display:none;max-width:420px;margin:20px auto 0;">
+  <div id="rsvp-extra-container"></div>
+  <div style="display:flex;gap:10px;flex-direction:column;margin-top:10px;">
+    <button class="btn-add-person" onclick="addExtraPerson()">✦ Agregar otra persona</button>
+    <button class="btn-gold" id="rsvp-extra-btn" onclick="submitExtra()">Confirmar ✨</button>
+    <p class="sheet-loading" id="rsvp-extra-loading">Enviando...</p>
+  </div>
+</div>
+</section>
+<!-- ═══ SLIDESHOW ═══ -->
+<section class="section s-dark" id="slideshow-section">
+<span class="sec-tag">un recorrido</span>
+<h2 class="sec-title">Estos 15 años...</h2>
+<div class="gold-line"></div>
+<p class="sec-body">Cada foto, un momento. Cada momento, parte de quien soy hoy.</p>
+<div class="slides-wrap">
+<div class="slide active">
+<div class="slide-photo"><div class="slide-photo-placeholder">🍼<span>foto aquí</span></div></div>
+<div class="slide-year-tag">1 año</div><p class="slide-caption">Mis primeros pasos en este mundo</p>
+</div>
+<div class="slide">
+<div class="slide-photo"><div class="slide-photo-placeholder">🎠<span>foto aquí</span></div></div>
+<div class="slide-year-tag">4 años</div><p class="slide-caption">La infancia más feliz</p>
+</div>
+<div class="slide">
+<div class="slide-photo"><div class="slide-photo-placeholder">🎒<span>foto aquí</span></div></div>
+<div class="slide-year-tag">7 años</div><p class="slide-caption">Empezando la escuela con todo</p>
+</div>
+<div class="slide">
+<div class="slide-photo"><div class="slide-photo-placeholder">⭐<span>foto aquí</span></div></div>
+<div class="slide-year-tag">10 años</div><p class="slide-caption">Creciendo y brillando</p>
+</div>
+<div class="slide">
+<div class="slide-photo"><div class="slide-photo-placeholder">💫<span>foto aquí</span></div></div>
+<div class="slide-year-tag">13 años</div><p class="slide-caption">Encontrando mi camino</p>
+</div>
+<div class="slide">
+<div class="slide-photo" style="background:rgba(212,170,90,.15);border-color:var(--gold);display:flex;align-items:center;justify-content:center;">
+<span style="font-family:'Playfair Display',serif;font-size:52px;color:var(--gold);">XV</span>
+</div>
+<div class="slide-year-tag" style="background:var(--rose);color:#fff;">¡Hoy! ✨</div>
+<p class="slide-caption">La noche más especial de mi vida</p>
+</div>
+</div>
+<div class="slide-dots" id="slideDots"></div>
+<div class="slide-nav">
+<button onclick="changeSlide(-1)">←</button>
+<button onclick="changeSlide(1)">→</button>
+</div>
+</section>
+<!-- ═══ CANCIÓN ═══ -->
+<section class="section s-rose">
+<span class="sec-tag">la playlist</span>
+<h2 class="sec-title">¿Cuál es la canción<br/>que no puede faltar?</h2>
+<div class="gold-line"></div>
+<p class="sec-body">Ayudame a armar la playlist perfecta para esta noche 🎶</p>
+<div id="cancion-wrap">
+<div class="cancion-form">
+<div><label class="field-label">Nombre de la canción</label><input class="rsvp-input" id="song-name" placeholder="Nombre de la canción" type="text"/></div>
+<div><label class="field-label">Artista / Autor</label><input class="rsvp-input" id="song-artist" placeholder="Nombre del artista" type="text"/></div>
+<div><label class="field-label">Link de YouTube (opcional)</label><input class="rsvp-input" id="song-yt" placeholder="https://youtube.com/..." type="url"/></div>
+<button class="btn-gold" id="song-btn" onclick="submitSong()">Sugerir canción 🎵</button>
+<p class="sheet-loading" id="song-loading">Enviando...</p>
+</div>
+</div>
+<div class="success-box" id="song-success">
+  <div class="music-burst" id="music-burst"></div>
+  <div class="song-success-content">
+    <div class="vinyl-spin">🎵</div>
+    <p class="song-success-headline">¡Ya suena en la lista!</p>
+    <p class="success-msg">Tu canción está en la playlist. ¡Esta noche va a sonar con todo! 🔥</p>
+  </div>
+</div>
+</section>
+<!-- ═══ DRESS CODE ═══ -->
+<section class="section s-dark">
+<span class="sec-tag">vestimenta</span>
+<h2 class="sec-title">Orientación para tu vestuario</h2>
+<div class="gold-line"></div>
+<p class="sec-body">Vengan con todo su estilo. Solo hay dos colores reservados 💫</p>
+<div class="dress-grid" style="justify-content:center;gap:28px;">
+<div class="dress-card">
+  <div class="dress-swatch" style="background:#ffffff;border:2px solid #ddd;"></div>
+  <span class="dress-name" style="color:var(--rose);">Blanco</span>
+  <span class="dress-hint">reservado para la festejada</span>
+</div>
+<div class="dress-card">
+  <div class="dress-swatch" style="background:#111111;"></div>
+  <span class="dress-name" style="color:var(--rose);">Negro</span>
+  <span class="dress-hint">preferimos evitarlo</span>
+</div>
+</div>
+<p class="dress-avoid" style="margin-top:22px;font-size:17px;">Por favor evitá el <strong>blanco</strong> y el <strong>negro</strong> ✨</p>
+</section>
+<!-- ═══ MURO MENSAJES ═══ -->
+<section class="section">
+<span class="sec-tag">mensajes</span>
+<h2 class="sec-title">Dejá tu mensaje<br/>para Paulina</h2>
+<div class="gold-line"></div>
+<p class="sec-body" style="margin-bottom:26px;">Un muro de amor para esta noche tan especial 💌</p>
+<div class="wall-form">
+<div><label class="field-label">Tu nombre</label><input class="rsvp-input" id="msg-author" placeholder="¿Quién lo manda?" type="text"/></div>
+<div><label class="field-label">Tu mensaje</label><textarea class="rsvp-input" id="msg-text" placeholder="Escribí algo hermoso para Pauli... 💛" rows="3"></textarea></div>
+<button class="btn-gold" id="msg-btn" onclick="submitMessage()">Publicar mensaje 💌</button>
+<p class="sheet-loading" id="msg-loading">Enviando...</p>
+</div>
+<div class="messages-grid" id="messages-grid"></div>
+<p id="no-msgs" style="font-style:italic;color:var(--text3);margin-top:14px;font-size:16px;">Sé el primero en dejar un mensaje 💛</p>
+<div id="load-more-wrap" style="display:none;margin-top:18px;">
+<button class="btn-load-more" id="load-more-btn" onclick="showMoreMessages()">Ver más mensajes 💌</button>
+</div>
+</section>
+<!-- ═══ REGALOS ═══ -->
+<section class="section s-dark">
+<span class="sec-tag">regalos</span>
+<h2 class="sec-title">Si deseás regalarme<br/>algo más que tu presencia</h2>
+<div class="gold-line"></div>
+<p class="sec-body">Tu presencia ya es el mejor regalo. Pero si querés sorprenderme… 🎁</p>
+<div class="cuenta-card" style="margin-top:26px;">
+<div class="cuenta-row"><span class="cuenta-key">Banco</span><span class="cuenta-val">Banco República</span></div>
+<div class="cuenta-row"><span class="cuenta-key">Titular</span><span class="cuenta-val">Paulina ——</span></div>
+<div class="cuenta-row"><span class="cuenta-key">Cuenta</span><span class="cuenta-val">···· ···· ···· ····</span></div>
+<div class="cuenta-row"><span class="cuenta-key">Alias</span><span class="cuenta-val">PAULI.XV</span></div>
+</div>
+<p style="margin-top:12px;font-style:italic;font-size:13px;color:var(--text3);">* Reemplazá estos datos con los reales en el código</p>
+</section>
+<!-- ═══ COMPARTIR ═══ -->
+<section class="section s-rose">
+<span class="sec-tag">después de la fiesta</span>
+<h2 class="sec-title">¡Compartamos este día!</h2>
+<div class="gold-line"></div>
+<div class="compartir-card">
+<p style="font-size:17px;line-height:1.75;color:var(--text2);font-style:italic;">Compartí tus fotos y videos de esta noche hermosa 📸✨</p>
+<a class="ig-link" href="https://instagram.com/TU_USUARIO" target="_blank">📸 @TU_USUARIO</a>
+<p style="margin-top:12px;font-size:13px;color:var(--text3);font-style:italic;">Usá el hashtag <strong style="color:var(--sky)">#XVPaulina</strong></p>
+</div>
+</section>
+<!-- ═══ FOOTER ═══ -->
+<footer>
+<div class="ornament">✦ ✦ ✦</div>
+<p class="footer-name">Paulina</p>
+<div class="gold-line"></div>
+<p class="footer-sub">Mis Quince Años · 5 de Junio</p>
+<div class="ornament" style="margin-top:18px;">🌸</div>
+<p class="footer-dev">Desarrollado con amor por <a href="https://www.instagram.com/invitaweb.uy/" target="_blank">InvitaWeb</a></p>
+</footer>
 <script>
+const RSVP_URL   = 'https://script.google.com/macros/s/AKfycby2bw_PEi1w4SXfk_TTuOe9Qt4-QoPeKziPu39IPRhcY4eWBf8t-KB4WMZ339tUosrSmA/exec';
+const SONG_URL   = 'https://script.google.com/macros/s/AKfycbwihVxnTMyxjVmnY-t0No33_3AevM8NCIVOHHYjIyl0JQ2nB4KIGzhMf7et7EvwhIkz/exec';
+const WALL_URL   = 'https://script.google.com/macros/s/AKfycbxCaXE3C5wKMLF_wX_gRmzpaJHUsHrGMh-nxW_STA-od3k9UpepJ0_OFmLWIS_dCV-lzw/exec';
+
 /* PÉTALOS */
 (function(){
   const c=document.getElementById('petals');
-  const cols=['#a8d8f0','#e8a0b4','#5aacdc','#f0c8d8','#90ccee','#d4607a','#f5d0dc'];
-  for(let i=0;i<28;i++){
-    const p=document.createElement('div');p.className='petal';
-    const s=6+Math.random()*9;
-    p.style.cssText=[
-      'left:'+(Math.random()*100)+'vw',
-      'width:'+s+'px','height:'+(s*1.4)+'px',
+  const cols=['#a8d8f0','#e8a0b4','#5aacdc','#f0c8d8','#90ccee','#d4607a','#b8e0f4'];
+  for(let i=0;i<30;i++){
+    const p=document.createElement('div'); p.className='petal';
+    const s=7+Math.random()*10;
+    p.style.cssText=['left:'+(Math.random()*100)+'vw','width:'+s+'px','height:'+(s*1.4)+'px',
       'background:'+cols[Math.floor(Math.random()*cols.length)],
-      'animation-duration:'+(5+Math.random()*7)+'s',
-      'animation-delay:'+(-Math.random()*8)+'s',
+      'animation-duration:'+(4+Math.random()*7)+'s',
+      'animation-delay:'+(Math.random()*10)+'s',
       'border-radius:'+(48+Math.random()*20)+'% '+(38+Math.random()*20)+'% '+(52+Math.random()*18)+'% '+(34+Math.random()*18)+'%'
     ].join(';');
     c.appendChild(p);
   }
 })();
 
-/* ABRIR SOBRE */
-let opened=false;
-function openEnvelope(){
-  if(opened)return;
-  opened=true;
-  document.getElementById('tap-hint').style.opacity='0';
+/* SPARKLES */
+(function(){
+  const h=document.getElementById('hero');
+  for(let i=0;i<18;i++){
+    const s=document.createElement('div'); s.className='hero-sparkle';
+    s.style.cssText=['left:'+(10+Math.random()*80)+'%','top:'+(10+Math.random()*80)+'%',
+      'width:'+(1+Math.random()*2.5)+'px','height:'+(1+Math.random()*2.5)+'px',
+      'animation-duration:'+(2+Math.random()*4)+'s','animation-delay:'+(Math.random()*4)+'s'
+    ].join(';');
+    h.appendChild(s);
+  }
+})();
 
-  const scene=document.getElementById('scene');
-  const letter=document.getElementById('letter');
-  const envWrap=document.getElementById('envelope-wrap');
+/* MÚSICA */
+let playing=false;
+function toggleMusic(){
+  const a=document.getElementById('bg-audio');
+  const icon=document.getElementById('musicIcon');
+  const lbl=document.getElementById('musicLabel');
+  const anim=document.getElementById('audioAnim');
+  const floatBtn=document.getElementById('music-float');
+  const pauseSvg=document.getElementById('float-pause-svg');
+  const playSvg=document.getElementById('float-play-svg');
+  if(!playing){
+    a.play().catch(()=>{});
+    icon.textContent='⏸'; lbl.textContent='Pausar música';
+    anim.classList.add('show');
+    floatBtn.style.display='flex';
+    if(pauseSvg){pauseSvg.style.display='block'; playSvg.style.display='none';}
+    playing=true;
+  }else{
+    a.pause();
+    icon.textContent='▶'; lbl.textContent='Reanudar música';
+    anim.classList.remove('show');
+    floatBtn.style.display='flex';
+    if(pauseSvg){pauseSvg.style.display='none'; playSvg.style.display='block';}
+    playing=false;
+  }
+}
 
-  scene.classList.add('opening');
+/* COUNTDOWN */
+(function(){
+  const target=new Date('2026-06-05T21:00:00');
+  const grid=document.getElementById('countdownGrid');
+  const arrived=document.getElementById('event-arrived');
+  const title=document.getElementById('countdownTitle');
+  function tick(){
+    const diff=target-Date.now();
+    if(diff<=0){grid.style.display='none';arrived.style.display='block';title.style.display='none';return;}
+    document.getElementById('cd-days').textContent=Math.floor(diff/86400000);
+    document.getElementById('cd-hours').textContent=Math.floor((diff%86400000)/3600000);
+    document.getElementById('cd-mins').textContent=Math.floor((diff%3600000)/60000);
+    document.getElementById('cd-secs').textContent=Math.floor((diff%60000)/1000);
+  }
+  tick(); setInterval(tick,1000);
+})();
 
-  // A los 500ms (cuando el flap ya está abierto) la carta sube POR ENCIMA del sobre
-  setTimeout(()=>{
-    letter.style.zIndex='35';      // ahora por encima del sobre (z:20)
-    envWrap.style.zIndex='15';     // sobre baja
-  }, 500);
+/* MOOD */
+function selectMood(btn,msg){
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const r=document.getElementById('mood-response');
+  r.style.opacity=0;
+  setTimeout(()=>{r.textContent=msg;r.style.opacity=1;},200);
+}
 
-  // A los 1200ms → fade out y navegar
-  setTimeout(()=>{
-    scene.classList.add('done');
-    document.getElementById('overlay').classList.add('fade-in');
-    setTimeout(()=>{ window.location.href='invitacion.html'; }, 700);
-  }, 1200);
+/* SLIDESHOW */
+(function(){
+  const slides=document.querySelectorAll('.slide');
+  const dotsEl=document.getElementById('slideDots');
+  let current=0, timer;
+  slides.forEach((_,i)=>{
+    const d=document.createElement('button'); d.className='sdot'+(i===0?' active':'');
+    d.onclick=()=>goTo(i); dotsEl.appendChild(d);
+  });
+  function goTo(n){
+    slides[current].classList.remove('active'); dotsEl.children[current].classList.remove('active');
+    current=(n+slides.length)%slides.length;
+    slides[current].classList.add('active'); dotsEl.children[current].classList.add('active');
+    resetTimer();
+  }
+  function resetTimer(){clearInterval(timer); timer=setInterval(()=>goTo(current+1),4000);}
+  resetTimer();
+  window.changeSlide=n=>goTo(current+n);
+})();
+
+/* UTIL FETCH A SHEETS */
+async function sendToSheet(url, data, btnId, loadingId){
+  const btn=document.getElementById(btnId);
+  const loading=document.getElementById(loadingId);
+  btn.disabled=true; loading.classList.add('show');
+  try{
+    // Sin Content-Type header: evita preflight CORS con Google Apps Script
+    await fetch(url,{method:'POST',body:JSON.stringify(data)});
+  }catch(e){console.warn('Sheet error',e);}
+  loading.classList.remove('show');
+}
+
+/* RSVP */
+let rsvpPersonCount = 1;
+function addRSVPPerson(){
+  const container = document.getElementById('rsvp-forms-container');
+  const idx = rsvpPersonCount;
+  const div = document.createElement('div');
+  div.className = 'rsvp-form rsvp-person-form';
+  div.id = 'rsvp-form-'+idx;
+  div.innerHTML = `
+    <p class="rsvp-person-label">Persona ${idx+1} <button onclick="removeRSVPPerson(${idx})" class="btn-remove-person">✕ quitar</button></p>
+    <div><label class="field-label">Nombre completo</label><input class="rsvp-input rsvp-name-input" placeholder="Nombre completo" type="text"/></div>
+    <div><label class="field-label">Dato importante (opcional)</label><input class="rsvp-input rsvp-dato-input" placeholder="Ej: soy vegetariano/a, tiene alergia..." type="text"/></div>
+  `;
+  container.appendChild(div);
+  rsvpPersonCount++;
+}
+function removeRSVPPerson(idx){
+  const el = document.getElementById('rsvp-form-'+idx);
+  if(el) el.remove();
+}
+async function submitRSVP(){
+  const forms = document.querySelectorAll('.rsvp-person-form');
+  const personas = [];
+  let allValid = true;
+  forms.forEach((form,i)=>{
+    const name = form.querySelector('.rsvp-name-input').value.trim();
+    const dato = form.querySelector('.rsvp-dato-input').value.trim();
+    if(!name){ allValid=false; form.querySelector('.rsvp-name-input').focus(); }
+    else personas.push({name,dato});
+  });
+  if(!allValid){ alert('Por favor ingresá el nombre de todas las personas.'); return; }
+  const btn=document.getElementById('rsvp-btn');
+  const loading=document.getElementById('rsvp-loading');
+  btn.disabled=true; loading.classList.add('show');
+  for(const p of personas){
+    await fetch(RSVP_URL,{method:'POST',body:JSON.stringify({nombre:p.name,extra:p.dato,timestamp:new Date().toLocaleString('es-UY')})}).catch(()=>{});
+  }
+  loading.classList.remove('show');
+  document.getElementById('rsvp-wrap').style.display='none';
+  const suc=document.getElementById('rsvp-success'); suc.style.display='block';
+  const nombres = personas.map(p=>p.name).join(', ');
+  document.getElementById('rsvp-thanks-msg').textContent='¡Gracias! Asistencia confirmada para: '+nombres+'. ¡Los esperamos con todo! 🌸';
+  setTimeout(launchConfetti, 100);
+  setTimeout(launchConfetti, 500);
+}
+
+/* CANCIÓN */
+async function submitSong(){
+  const name=document.getElementById('song-name').value.trim();
+  const artist=document.getElementById('song-artist').value.trim();
+  const yt=document.getElementById('song-yt').value.trim();
+  if(!name||!artist){alert('Por favor ingresá la canción y el artista.');return;}
+  await sendToSheet(SONG_URL,{nombre:name+' - '+artist,extra:yt,timestamp:new Date().toLocaleString('es-UY')},'song-btn','song-loading');
+  document.getElementById('cancion-wrap').style.display='none';
+  document.getElementById('song-success').style.display='block';
+  setTimeout(launchMusicNotes, 100);
+}
+
+/* MURO */
+const localMessages=[];
+
+// Cargar mensajes existentes desde Sheets al cargar la página
+(async function loadMessages(){
+  try{
+    const res = await fetch(WALL_URL);
+    const data = await res.json();
+    if(Array.isArray(data)){
+      data.forEach(row=>{
+        if(row.nombre && row.mensaje){
+          localMessages.push({author:row.nombre, text:row.mensaje, time:new Date(row.timestamp||Date.now())});
+        }
+      });
+      renderMessages();
+    }
+  }catch(e){ /* silencioso si falla */ }
+})();
+async function submitMessage(){
+  const author=document.getElementById('msg-author').value.trim();
+  const text=document.getElementById('msg-text').value.trim();
+  if(!author||!text){alert('Por favor completá tu nombre y mensaje.');return;}
+  await sendToSheet(WALL_URL,{nombre:author,mensaje:text,timestamp:new Date().toLocaleString('es-UY')},'msg-btn','msg-loading');
+  localMessages.push({author,text,time:new Date()});
+  document.getElementById('msg-author').value='';
+  document.getElementById('msg-text').value='';
+  document.getElementById('msg-btn').disabled=false;
+  renderMessages();
+}
+const MSG_PAGE = 5;
+let msgVisible = MSG_PAGE;
+function renderMessages(reset){
+  if(reset) msgVisible = MSG_PAGE;
+  const grid=document.getElementById('messages-grid');
+  const noMsg=document.getElementById('no-msgs');
+  const loadWrap=document.getElementById('load-more-wrap');
+  const sorted=[...localMessages].reverse();
+  if(sorted.length>0) noMsg.style.display='none';
+  grid.innerHTML='';
+  sorted.slice(0,msgVisible).forEach(m=>{
+    const d=document.createElement('div'); d.className='msg-card';
+    const t=m.time instanceof Date ? m.time : new Date(m.time);
+    const min=t.getMinutes().toString().padStart(2,'0');
+    d.innerHTML=`<p class="msg-author">${m.author}</p><p class="msg-text">"${m.text}"</p>`;
+    grid.appendChild(d);
+  });
+  if(loadWrap) loadWrap.style.display = (sorted.length > msgVisible) ? 'block' : 'none';
+}
+function showMoreMessages(){
+  msgVisible += MSG_PAGE;
+  renderMessages();
+}
+
+/* RSVP EXTRA */
+function showAddMore(){
+  document.getElementById('rsvp-add-more').style.display='block';
+  addExtraPerson();
+  document.getElementById('rsvp-success').querySelector('.btn-add-more').style.display='none';
+}
+let extraPersonCount=0;
+function addExtraPerson(){
+  const container=document.getElementById('rsvp-extra-container');
+  const idx=extraPersonCount++;
+  const div=document.createElement('div');
+  div.className='rsvp-form rsvp-person-form'; div.id='rsvp-extra-'+idx;
+  div.innerHTML=`
+    <p class="rsvp-person-label">Persona extra ${idx+1} <button onclick="document.getElementById('rsvp-extra-${idx}').remove()" class="btn-remove-person">✕ quitar</button></p>
+    <div><label class="field-label">Nombre completo</label><input class="rsvp-input rsvp-name-input" placeholder="Nombre completo" type="text"/></div>
+    <div><label class="field-label">Dato importante (opcional)</label><input class="rsvp-input rsvp-dato-input" placeholder="Ej: soy vegetariano/a..." type="text"/></div>
+  `;
+  container.appendChild(div);
+}
+async function submitExtra(){
+  const forms=document.querySelectorAll('#rsvp-extra-container .rsvp-person-form');
+  const personas=[];
+  let allValid=true;
+  forms.forEach(form=>{
+    const name=form.querySelector('.rsvp-name-input').value.trim();
+    const dato=form.querySelector('.rsvp-dato-input').value.trim();
+    if(!name){allValid=false;}else{personas.push({name,dato});}
+  });
+  if(!allValid){alert('Por favor ingresá el nombre.');return;}
+  const btn=document.getElementById('rsvp-extra-btn');
+  const loading=document.getElementById('rsvp-extra-loading');
+  btn.disabled=true; loading.classList.add('show');
+  for(const p of personas){
+    await fetch(RSVP_URL,{method:'POST',body:JSON.stringify({nombre:p.name,extra:p.dato,timestamp:new Date().toLocaleString('es-UY')})}).catch(()=>{});
+  }
+  loading.classList.remove('show');
+  document.getElementById('rsvp-add-more').style.display='none';
+  const nombres=personas.map(p=>p.name).join(', ');
+  const msg=document.getElementById('rsvp-thanks-msg');
+  msg.textContent+=' • También confirmado: '+nombres+' 🌸';
+}
+
+/* REGALOS */
+function showRegalo(btn){
+  document.getElementById('regalo-reveal').classList.add('show');
+  btn.style.display='none';
+}
+
+/* ═══ ANIMACIÓN RSVP: confetti ═══ */
+function launchConfetti(){
+  const burst=document.getElementById('party-burst');
+  if(!burst) return;
+  burst.innerHTML='';
+  const colors=['#5aacdc','#d4607a','#e8cc88','#a8d8f0','#f0c8d8','#7ecfa0','#ffd700'];
+  for(let i=0;i<40;i++){
+    const el=document.createElement('div');
+    el.className='confetti-piece';
+    const angle=Math.random()*360;
+    const dist=80+Math.random()*140;
+    const tx=Math.cos(angle*Math.PI/180)*dist+'px';
+    const ty=Math.sin(angle*Math.PI/180)*dist+'px';
+    const rot=(Math.random()-0.5)*720+'deg';
+    el.style.cssText=`background:${colors[i%colors.length]};--tx:${tx};--ty:${ty};--rot:${rot};animation-delay:${Math.random()*.3}s;border-radius:${Math.random()>0.5?'50%':'2px'};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;`;
+    burst.appendChild(el);
+  }
+}
+
+/* ═══ ANIMACIÓN CANCIÓN: notas ═══ */
+function launchMusicNotes(){
+  const burst=document.getElementById('music-burst');
+  if(!burst) return;
+  burst.innerHTML='';
+  const notes=['🎵','🎶','🎸','🎹','🎤','✨','🎼','💫'];
+  for(let i=0;i<18;i++){
+    const el=document.createElement('div');
+    el.className='music-note';
+    const angle=Math.random()*360;
+    const dist=70+Math.random()*160;
+    const tx=Math.cos(angle*Math.PI/180)*dist+'px';
+    const ty=Math.sin(angle*Math.PI/180)*dist+'px';
+    const rot=(Math.random()-0.5)*180+'deg';
+    el.style.cssText=`--tx:${tx};--ty:${ty};--rot:${rot};animation-delay:${Math.random()*.4}s;font-size:${18+Math.random()*18}px;`;
+    el.textContent=notes[Math.floor(Math.random()*notes.length)];
+    burst.appendChild(el);
+  }
 }
 </script>
+
+<!-- MUSIC FLOAT WIDGET -->
+<button id="music-float" onclick="toggleMusic()" title="Reproducir / Pausar música"
+  style="display:none;position:fixed;bottom:22px;right:22px;z-index:1000;
+  width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--sky),var(--rose));
+  box-shadow:0 4px 20px rgba(90,172,220,0.4);
+  align-items:center;justify-content:center;
+  transition:transform .2s,box-shadow .2s;padding:0;">
+  <!-- PAUSE icon (dos barras) -->
+  <svg id="float-pause-svg" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" style="display:block;">
+    <rect x="5" y="4" width="4" height="16" rx="1.5"/>
+    <rect x="15" y="4" width="4" height="16" rx="1.5"/>
+  </svg>
+  <!-- PLAY icon (triángulo) -->
+  <svg id="float-play-svg" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="white" style="display:none;margin-left:3px;">
+    <polygon points="5,3 19,12 5,21"/>
+  </svg>
+</button>
 </body>
 </html>
